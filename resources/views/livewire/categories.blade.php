@@ -32,7 +32,7 @@
                                         {{ $category->name }}
                                     </td>
                                     <td class="px-6 py-4 text-sm font-medium whitespace-nowrap text-end">
-                                        <button type="button"
+                                        <button type="button" wire:click="edit({{ $category->id }})"
                                             class="inline-flex items-center text-sm font-semibold text-blue-600 border border-transparent rounded-lg gap-x-2 hover:text-blue-800 disabled:opacity-50 disabled:pointer-events-none">Editar</button>
                                         <button type="button"
                                             class="inline-flex items-center text-sm font-semibold text-blue-600 border border-transparent rounded-lg gap-x-2 hover:text-blue-800 disabled:opacity-50 disabled:pointer-events-none">Eliminar</button>
@@ -45,6 +45,7 @@
             </div>
         </div>
     </div>
+    {{ $categories->links() }}
 
     <form wire:submit='save'>
         <x-dialog-modal wire:model='createCategory.open'>
@@ -60,6 +61,24 @@
             </x-slot>
             <x-slot name="footer">
                 <x-button type="submit">Crear categoría</x-button>
+            </x-slot>
+        </x-dialog-modal>
+    </form>
+
+    <form wire:submit='update'>
+        <x-dialog-modal wire:model='editCategory.open'>
+            <x-slot name="title">
+                Editar categoría
+            </x-slot>
+            <x-slot name="content">
+                <div class="mb-4">
+                    <x-label>Nombre</x-label>
+                    <x-input class="w-full" wire:model.live='editCategory.name' />
+                    <x-input-error for="editCategory.name" />
+                </div>
+            </x-slot>
+            <x-slot name="footer">
+                <x-button type="submit">Actualizar categoría</x-button>
             </x-slot>
         </x-dialog-modal>
     </form>

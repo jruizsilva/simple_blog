@@ -20,5 +20,6 @@ class CreateCategoryForm extends Form
         Category::create(
             $this->only(['name', 'slug'])
         );
+        $this->reset();
     }
 }

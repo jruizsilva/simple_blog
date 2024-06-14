@@ -3,17 +3,17 @@
 namespace App\Livewire;
 
 use App\Livewire\Forms\CreateCategoryForm;
+use App\Livewire\Forms\EditCategoryForm;
 use App\Models\Category;
 use Livewire\Component;
 
 class Categories extends Component
 {
-    public $categories;
     public CreateCategoryForm $createCategory;
+    public EditCategoryForm $editCategory;
 
     public function mount()
     {
-        $this->categories = Category::orderBy('id', 'desc')->get();
     }
 
     public function save()
@@ -21,8 +21,21 @@ class Categories extends Component
         $this->createCategory->save();
     }
 
+    public function edit($categoryId)
+    {
+        $this->editCategory->edit($categoryId);
+    }
+    public function update()
+    {
+        $this->editCategory->update();
+    }
+
     public function render()
     {
-        return view('livewire.categories');
+        $categories = Category::orderBy('id', 'desc')->paginate(3);
+        $data = [
+            'categories' => $categories,
+        ];
+        return view('livewire.categories', $data);
     }
 }
