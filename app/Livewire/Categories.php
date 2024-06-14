@@ -11,6 +11,8 @@ class Categories extends Component
 {
     public CreateCategoryForm $createCategory;
     public EditCategoryForm $editCategory;
+    public $open;
+    public $categoryId;
 
     public function mount()
     {
@@ -28,6 +30,17 @@ class Categories extends Component
     public function update()
     {
         $this->editCategory->update();
+    }
+    public function confirmDelete($categoryId)
+    {
+        $this->open = true;
+        $this->categoryId = $categoryId;
+    }
+
+    public function destroy()
+    {
+        Category::destroy($this->categoryId);
+        $this->reset(['open', 'categoryId']);
     }
 
     public function render()

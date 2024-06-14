@@ -34,7 +34,7 @@
                                     <td class="px-6 py-4 text-sm font-medium whitespace-nowrap text-end">
                                         <button type="button" wire:click="edit({{ $category->id }})"
                                             class="inline-flex items-center text-sm font-semibold text-blue-600 border border-transparent rounded-lg gap-x-2 hover:text-blue-800 disabled:opacity-50 disabled:pointer-events-none">Editar</button>
-                                        <button type="button"
+                                        <button type="button" wire:click="confirmDelete({{ $category->id }})"
                                             class="inline-flex items-center text-sm font-semibold text-blue-600 border border-transparent rounded-lg gap-x-2 hover:text-blue-800 disabled:opacity-50 disabled:pointer-events-none">Eliminar</button>
                                     </td>
                                 </tr>
@@ -82,4 +82,16 @@
             </x-slot>
         </x-dialog-modal>
     </form>
+
+    <x-dialog-modal wire:model='open'>
+        <x-slot name="title">
+            ¿Desea eliminar la categoria?
+        </x-slot>
+        <x-slot name="content">
+            ¿Desea eliminar la categoria?
+        </x-slot>
+        <x-slot name="footer">
+            <x-danger-button wire:click="destroy">Si eliminar</x-danger-button>
+        </x-slot>
+    </x-dialog-modal>
 </div>
