@@ -1,7 +1,7 @@
 <div class="p-5">
-    <button type="button"
+    <button type="button" wire:click="createCategory.open = true"
         class="inline-flex items-center px-3 py-2 mb-2 text-sm font-semibold text-white bg-blue-600 border border-transparent rounded-lg gap-x-2 hover:bg-blue-700 disabled:opacity-50 disabled:pointer-events-none">
-        Agregar categoria
+        Agregar categoría
     </button>
     <div class="flex flex-col">
         <div class="-m-1.5 overflow-x-auto">
@@ -45,4 +45,22 @@
             </div>
         </div>
     </div>
+
+    <form wire:submit='save'>
+        <x-dialog-modal wire:model='createCategory.open'>
+            <x-slot name="title">
+                Crear categoría
+            </x-slot>
+            <x-slot name="content">
+                <div class="mb-4">
+                    <x-label>Nombre</x-label>
+                    <x-input class="w-full" wire:model.live='createCategory.name' />
+                    <x-input-error for="createCategory.name" />
+                </div>
+            </x-slot>
+            <x-slot name="footer">
+                <x-button type="submit">Crear categoría</x-button>
+            </x-slot>
+        </x-dialog-modal>
+    </form>
 </div>

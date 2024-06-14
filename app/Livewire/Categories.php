@@ -16,6 +16,11 @@ class Categories extends Component
         $this->categories = Category::orderBy('id', 'desc')->get();
     }
 
+    public function save()
+    {
+        $this->createCategory->save();
+    }
+
     public function render()
     {
         return view('livewire.categories');
