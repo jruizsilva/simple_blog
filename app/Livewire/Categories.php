@@ -11,14 +11,13 @@ class Categories extends Component
     public $categories;
     public CreateCategoryForm $createCategory;
 
-
     public function mount()
     {
-        $this->categories = Category::all();
+        $this->categories = Category::orderBy('id', 'desc')->get();
     }
 
     public function render()
     {
-        return view('admin.categories');
+        return view('livewire.categories');
     }
 }

@@ -3,8 +3,6 @@
 use App\Http\Controllers\Admin\CategoryController;
 use App\Http\Controllers\Admin\HomeController;
 use App\Http\Controllers\PostController;
-use App\Livewire\Categories;
-use App\Models\Category;
 use Illuminate\Support\Facades\Route;
 
 Route::middleware([
