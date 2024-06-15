@@ -94,4 +94,27 @@
             <x-danger-button wire:click="destroy">Si eliminar</x-danger-button>
         </x-slot>
     </x-dialog-modal>
+
+    @push('js')
+        <script>
+            Livewire.on('categoryUpdated', function() {
+                Swal.fire({
+                    icon: 'success',
+                    title: '¡Éxito!',
+                    text: "Actualizado correctamente",
+                    toast: true,
+                    position: 'top-end',
+                    showConfirmButton: true,
+                    timer: 3000,
+                    timerProgressBar: true,
+                    didOpen: (toast) => {
+                        toast.addEventListener('mouseenter', Swal.stopTimer)
+                        toast.addEventListener('mouseleave', Swal.resumeTimer)
+                    }
+                });
+            })
+        </script>
+    @endpush
+
+    <script></script>
 </div>

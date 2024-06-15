@@ -30,6 +30,7 @@ class Categories extends Component
     public function update()
     {
         $this->editCategory->update();
+        $this->dispatch('categoryUpdated');
     }
     public function confirmDelete($categoryId)
     {
