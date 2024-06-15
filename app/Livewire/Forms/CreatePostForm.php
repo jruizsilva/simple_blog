@@ -19,6 +19,7 @@ class CreatePostForm extends Form
     public $status;
     public $tags = [];
     public $extract;
+    public $user_id;
     public $body;
 
     protected function rules()
@@ -46,10 +47,14 @@ class CreatePostForm extends Form
     public function save()
     {
         $this->validate();
+        $this->user_id = auth()->user()->id;
         $this->slug = Str::slug($this->name);
-        // Post::create(
-        //     $this->only(['name', 'slug'])
-        // );
-        // $this->reset();
+        $post = Post::create(
+            $this->only(['name', 'slug', 'category_id', 'status', 'extract', 'body', 'user_id'])
+        );
+        if ($this->tags) {
+            $post->tags()->attach($this->tags);
+        }
+        $this->reset();
     }
 }

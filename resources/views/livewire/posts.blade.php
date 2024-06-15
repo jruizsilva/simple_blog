@@ -72,6 +72,7 @@
                 <div class="mb-4">
                     <x-label>Categoría</x-label>
                     <x-select class="w-full" wire:model.live='createPost.category_id'>
+                        <option value="" disabled selected>Seleccione una categoria</option>
                         @foreach ($categories as $category)
                             <option value="{{ $category->id }}">{{ $category->name }}</option>
                         @endforeach
