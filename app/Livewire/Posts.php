@@ -2,7 +2,11 @@
 
 namespace App\Livewire;
 
+use App\Livewire\Forms\CreatePostForm;
+use App\Livewire\Forms\EditPostForm;
+use App\Models\Category;
 use App\Models\Post;
+use App\Models\Tag;
 use Livewire\Component;
 use Livewire\WithPagination;
 
@@ -12,10 +16,25 @@ class Posts extends Component
 
     protected $paginationTheme = 'tailwind';
     public $search;
+    public $categories;
+    public $tags;
+    public CreatePostForm $createPost;
+    public EditPostForm $editPost;
+
+    public function mount()
+    {
+        $this->categories = Category::all();
+        $this->tags = Tag::all();
+    }
 
     public function updatingSearch()
     {
         $this->resetPage();
+    }
+
+    public function save()
+    {
+        $this->createPost->save();
     }
 
     public function render()

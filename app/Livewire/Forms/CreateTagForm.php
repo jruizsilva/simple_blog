@@ -17,6 +17,7 @@ class CreateTagForm extends Form
 
     public function save()
     {
+        $this->validate();
         $this->slug = Str::slug($this->name);
         $this->color =  fake()->hexColor();
         Tag::create(

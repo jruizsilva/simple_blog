@@ -16,6 +16,7 @@ class CreateCategoryForm extends Form
 
     public function save()
     {
+        $this->validate();
         $this->slug = Str::slug($this->name);
         Category::create(
             $this->only(['name', 'slug'])
