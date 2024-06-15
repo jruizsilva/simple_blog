@@ -6,9 +6,13 @@ use App\Livewire\Forms\CreateCategoryForm;
 use App\Livewire\Forms\EditCategoryForm;
 use App\Models\Category;
 use Livewire\Component;
+use Livewire\WithPagination;
 
 class Categories extends Component
 {
+    use WithPagination;
+
+    protected $paginationTheme = 'tailwind';
     public CreateCategoryForm $createCategory;
     public EditCategoryForm $editCategory;
     public $open;
@@ -21,6 +25,7 @@ class Categories extends Component
     public function save()
     {
         $this->createCategory->save();
+        $this->dispatch('categoryCreated');
     }
 
     public function edit($categoryId)
@@ -42,6 +47,7 @@ class Categories extends Component
     {
         Category::destroy($this->categoryId);
         $this->reset(['open', 'categoryId']);
+        $this->dispatch('categoryDeleted');
     }
 
     public function render()

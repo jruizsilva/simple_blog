@@ -1,7 +1,7 @@
 <div class="p-5">
-    <button type="button" wire:click="createCategory.open = true"
+    <button type="button" wire:click="createTag.open = true"
         class="inline-flex items-center px-3 py-2 mb-2 text-sm font-semibold text-white bg-blue-600 border border-transparent rounded-lg gap-x-2 hover:bg-blue-700 disabled:opacity-50 disabled:pointer-events-none">
-        Agregar categoría
+        Agregar etiqueta
     </button>
     <div class="flex flex-col">
         <div class="-m-1.5 overflow-x-auto">
@@ -23,18 +23,18 @@
                             </tr>
                         </thead>
                         <tbody class="divide-y divide-gray-200">
-                            @foreach ($categories as $category)
+                            @foreach ($tags as $tag)
                                 <tr class="hover:bg-gray-100">
                                     <td class="px-6 py-4 text-sm font-medium text-gray-800 whitespace-nowrap">
-                                        {{ $category->id }}
+                                        {{ $tag->id }}
                                     </td>
                                     <td class="px-6 py-4 text-sm font-medium text-gray-800 whitespace-nowrap">
-                                        {{ $category->name }}
+                                        {{ $tag->name }}
                                     </td>
                                     <td class="px-6 py-4 text-sm font-medium whitespace-nowrap text-end">
-                                        <button type="button" wire:click="edit({{ $category->id }})"
+                                        <button type="button" wire:click="edit({{ $tag->id }})"
                                             class="inline-flex items-center text-sm font-semibold text-blue-600 border border-transparent rounded-lg gap-x-2 hover:text-blue-800 disabled:opacity-50 disabled:pointer-events-none">Editar</button>
-                                        <button type="button" wire:click="confirmDelete({{ $category->id }})"
+                                        <button type="button" wire:click="confirmDelete({{ $tag->id }})"
                                             class="inline-flex items-center text-sm font-semibold text-blue-600 border border-transparent rounded-lg gap-x-2 hover:text-blue-800 disabled:opacity-50 disabled:pointer-events-none">Eliminar</button>
                                     </td>
                                 </tr>
@@ -45,50 +45,50 @@
             </div>
         </div>
     </div>
-    {{ $categories->links() }}
+    {{ $tags->links() }}
 
     <form wire:submit='save'>
-        <x-dialog-modal wire:model='createCategory.open'>
+        <x-dialog-modal wire:model='createTag.open'>
             <x-slot name="title">
-                Crear categoría
+                Crear etiqueta
             </x-slot>
             <x-slot name="content">
                 <div class="mb-4">
                     <x-label>Nombre</x-label>
-                    <x-input class="w-full" wire:model.live='createCategory.name' />
-                    <x-input-error for="createCategory.name" />
+                    <x-input class="w-full" wire:model.live='createTag.name' />
+                    <x-input-error for="createTag.name" />
                 </div>
             </x-slot>
             <x-slot name="footer">
-                <x-button type="submit">Crear categoría</x-button>
+                <x-button type="submit">Crear etiqueta</x-button>
             </x-slot>
         </x-dialog-modal>
     </form>
 
     <form wire:submit='update'>
-        <x-dialog-modal wire:model='editCategory.open'>
+        <x-dialog-modal wire:model='editTag.open'>
             <x-slot name="title">
-                Editar categoría
+                Editar etiqueta
             </x-slot>
             <x-slot name="content">
                 <div class="mb-4">
                     <x-label>Nombre</x-label>
-                    <x-input class="w-full" wire:model.live='editCategory.name' />
-                    <x-input-error for="editCategory.name" />
+                    <x-input class="w-full" wire:model.live='editTag.name' />
+                    <x-input-error for="editTag.name" />
                 </div>
             </x-slot>
             <x-slot name="footer">
-                <x-button type="submit">Actualizar categoría</x-button>
+                <x-button type="submit">Actualizar etiqueta</x-button>
             </x-slot>
         </x-dialog-modal>
     </form>
 
     <x-dialog-modal wire:model='open'>
         <x-slot name="title">
-            ¿Desea eliminar la categoria?
+            ¿Desea eliminar la etiqueta?
         </x-slot>
         <x-slot name="content">
-            ¿Desea eliminar la categoria?
+            ¿Desea eliminar la etiqueta?
         </x-slot>
         <x-slot name="footer">
             <x-danger-button wire:click="destroy">Si eliminar</x-danger-button>
@@ -97,7 +97,7 @@
 
     @push('js')
         <script>
-            Livewire.on('categoryCreated', function() {
+            Livewire.on('tagCreated', function() {
                 Swal.fire({
                     icon: 'success',
                     title: '¡Éxito!',
@@ -113,7 +113,7 @@
                     }
                 });
             })
-            Livewire.on('categoryUpdated', function() {
+            Livewire.on('tagUpdated', function() {
                 Swal.fire({
                     icon: 'success',
                     title: '¡Éxito!',
@@ -129,7 +129,7 @@
                     }
                 });
             })
-            Livewire.on('categoryDeleted', function() {
+            Livewire.on('tagDeleted', function() {
                 Swal.fire({
                     icon: 'success',
                     title: '¡Éxito!',
