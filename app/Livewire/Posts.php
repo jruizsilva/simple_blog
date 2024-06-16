@@ -8,11 +8,13 @@ use App\Models\Category;
 use App\Models\Post;
 use App\Models\Tag;
 use Livewire\Component;
+use Livewire\Features\SupportFileUploads\WithFileUploads;
 use Livewire\WithPagination;
 
 class Posts extends Component
 {
     use WithPagination;
+    use WithFileUploads;
 
     protected $paginationTheme = 'tailwind';
     public $search;

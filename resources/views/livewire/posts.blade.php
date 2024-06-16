@@ -105,6 +105,26 @@
                     </ul>
                     <x-input-error for="createPost.tags" />
                 </div>
+                <div class="grid grid-cols-1 gap-2 mb-4 sm:grid-cols-3">
+                    <div>
+                        @if ($createPost->image)
+                            <img class="h-32" src="{{ $createPost->image->temporaryUrl() }}" />
+                        @else
+                            <img class="h-32" src="{{ Storage::url('full-moon.jpg') }}" />
+                        @endif
+                    </div>
+                    <div class="sm:col-span-2">
+                        <x-label>Imagen que se mostrará en el post</x-label>
+                        <div class="max-w-sm">
+                            <label class="block">
+                                <span class="sr-only">Choose profile photo</span>
+                                <input type="file" wire:model="createPost.image" accept="image/*"
+                                    class="block w-full text-sm text-gray-500 file:me-4 file:py-2 file:px-4 file:rounded-lg file:border-0 file:text-sm file:font-semibold file:bg-blue-600 file:text-white hover:file:bg-blue-700 file:disabled:opacity-50 file:disabled:pointer-events-none ">
+                            </label>
+                        </div>
+                    </div>
+                    <x-input-error for="createPost.image" />
+                </div>
                 <div class="mb-4">
                     <x-label>Extracto</x-label>
                     <x-textarea class="w-full min-h-20" wire:model="createPost.extract"></x-textarea>

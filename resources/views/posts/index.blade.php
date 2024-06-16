@@ -1,9 +1,22 @@
 <x-app-layout>
+
     <div class="container py-8">
         <div class="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3">
             @foreach ($posts as $post)
+                @php
+                    $url;
+                    if ($post->image) {
+                        if (str_contains($post->image->url, 'http')) {
+                            $url = $post->image->url;
+                        } else {
+                            $url = Storage::url($post->image->url);
+                        }
+                    } else {
+                        $url = Storage::url('full-moon.jpg');
+                    }
+                @endphp
                 <article class="w-full bg-center bg-cover h-80 @if ($loop->first) lg:col-span-2 @endif"
-                    style="background-image: url({{ $post->image->url }})">
+                    style="background-image: url({{ $url }})">
                     <div class="flex flex-col justify-center w-full h-full px-8">
                         <div>
                             @foreach ($post->tags as $tag)

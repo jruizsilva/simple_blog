@@ -2,6 +2,7 @@
 
 namespace App\Livewire\Forms;
 
+use App\Models\Image;
 use App\Models\Post;
 use Livewire\Attributes\Validate;
 use Livewire\Form;
@@ -21,6 +22,7 @@ class CreatePostForm extends Form
     public $extract;
     public $user_id;
     public $body;
+    public $image;
 
     protected function rules()
     {
@@ -28,6 +30,7 @@ class CreatePostForm extends Form
             'name' => 'required|min:3|unique:posts',
             'category_id' => 'required|exists:categories,id',
             'status' => 'required|in:1,2',
+            'image' => 'nullable|image|mimes:jpeg,png,jpg,svg|max:2048'
         ];
 
         if ($this->status == 2) {
@@ -54,6 +57,12 @@ class CreatePostForm extends Form
         );
         if ($this->tags) {
             $post->tags()->attach($this->tags);
+        }
+        if ($this->image) {
+            $url = $this->image->store('posts');
+            $post->image()->create([
+                'url' => $url
+            ]);
         }
         $this->reset();
     }

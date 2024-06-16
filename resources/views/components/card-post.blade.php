@@ -1,7 +1,18 @@
 @props(['post'])
-
+@php
+    $url;
+    if ($post->image) {
+        if (str_contains($post->image->url, 'http')) {
+            $url = $post->image->url;
+        } else {
+            $url = Storage::url($post->image->url);
+        }
+    } else {
+        $url = Storage::url('full-moon.jpg');
+    }
+@endphp
 <article class="mb-8 overflow-hidden bg-white rounded-lg shadow-lg">
-    <img class="object-cover object-center w-full h-72" src="{{ $post->image->url }}" alt="{{ $post->name }}">
+    <img class="object-cover object-center w-full h-72" src="{{ $url }}" alt="{{ $post->name }}">
     <div class="px-6 py-4">
         <h1 class="mb-2 text-xl font-bold">
             <a href="{{ route('posts.show', $post) }}">{{ $post->name }}</a>
