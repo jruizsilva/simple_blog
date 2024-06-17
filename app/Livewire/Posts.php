@@ -34,6 +34,16 @@ class Posts extends Component
         $this->resetPage();
     }
 
+    public function edit(Post $post)
+    {
+        $this->editPost->edit($post);
+    }
+
+    public function update()
+    {
+        $this->editPost->update();
+    }
+
     public function save()
     {
         $this->createPost->save();

@@ -38,7 +38,7 @@
                                             {{ $post->name }}
                                         </td>
                                         <td class="px-6 py-4 text-sm font-medium whitespace-nowrap text-end">
-                                            <button type="button" wire:click=""
+                                            <button type="button" wire:click="edit({{ $post }})"
                                                 class="inline-flex items-center text-sm font-semibold text-blue-600 border border-transparent rounded-lg gap-x-2 hover:text-blue-800 disabled:opacity-50 disabled:pointer-events-none">Editar</button>
                                             <button type="button" wire:click=""
                                                 class="inline-flex items-center text-sm font-semibold text-blue-600 border border-transparent rounded-lg gap-x-2 hover:text-blue-800 disabled:opacity-50 disabled:pointer-events-none">Eliminar</button>
@@ -142,5 +142,102 @@
         </x-dialog-modal>
     </form>
 
+    <form wire:submit='update'>
+        <x-dialog-modal wire:model='editPost.open'>
+            <x-slot name="title">
+                Editar post
+            </x-slot>
+            <x-slot name="content">
+                <div class="mb-4">
+                    <x-label>Nombre</x-label>
+                    <x-input class="w-full" wire:model.live='editPost.name' />
+                    <x-input-error for="editPost.name" />
+                </div>
+                <div class="mb-4">
+                    <x-label>Categoría</x-label>
+                    <x-select class="w-full" wire:model.live='editPost.category_id'>
+                        <option value="" disabled selected>Seleccione una categoria</option>
+                        @foreach ($categories as $category)
+                            <option value="{{ $category->id }}">{{ $category->name }}</option>
+                        @endforeach
+                    </x-select>
+                    <x-input-error for="editPost.category_id" />
+                </div>
+                <div class="mb-4">
+                    <x-label>Status</x-label>
+                    <div class="flex gap-2">
+                        <x-label>
+                            <x-input type="radio" value="1" wire:model="editPost.status" />Borrador
+                        </x-label>
+                        <x-label>
+                            <x-input type="radio" value="2" wire:model="editPost.status" />Publicado
+                        </x-label>
+                    </div>
+                    <x-input-error for="editPost.status" />
+                </div>
+                <div class="mb-4">
+                    <x-label>Etiquetas</x-label>
+                    <ul class="grid grid-cols-3">
+                        @foreach ($tags as $tag)
+                            <li>
+                                <label>
+                                    <x-checkbox wire:model="editPost.tags" value="{{ $tag->id }}" />
+                                    {{ $tag->name }}
+                                </label>
+                            </li>
+                        @endforeach
+                    </ul>
+                    <x-input-error for="editPost.tags" />
+                </div>
+                <div class="grid grid-cols-1 gap-2 mb-4 sm:grid-cols-3">
+                    @php
+                        // $url;
+                        // if ($editPost->image) {
+                        //     if (str_contains($editPost->image->url, 'http')) {
+                        //         $url = $editPost->image->url;
+                        //     } else {
+                        //         $url = Storage::url($editPost->image->url);
+                        //     }
+                        // } else {
+                        //     $url = Storage::url('full-moon.jpg');
+                        // }
+                    @endphp
+                    <div>
+                        @if ($editPost->image)
+                            <img class="h-32" src="{{ $editPost->image->temporaryUrl() }}" />
+                        @elseif ($editPost->image_preview)
+                            <img class="h-32" src="{{ Storage::url($editPost->image_preview->url) }}" />
+                        @else
+                            <img class="h-32" src="{{ Storage::url('full-moon.jpg') }}" />
+                        @endif
+                    </div>
+                    <div class="sm:col-span-2">
+                        <x-label>Imagen que se mostrará en el post</x-label>
+                        <div class="max-w-sm">
+                            <label class="block">
+                                <span class="sr-only">Choose profile photo</span>
+                                <input type="file" wire:model="editPost.image" accept="image/*"
+                                    class="block w-full text-sm text-gray-500 file:me-4 file:py-2 file:px-4 file:rounded-lg file:border-0 file:text-sm file:font-semibold file:bg-blue-600 file:text-white hover:file:bg-blue-700 file:disabled:opacity-50 file:disabled:pointer-events-none ">
+                            </label>
+                        </div>
+                    </div>
+                    <x-input-error for="editPost.image" />
+                </div>
+                <div class="mb-4">
+                    <x-label>Extracto</x-label>
+                    <x-textarea class="w-full min-h-20" wire:model="editPost.extract"></x-textarea>
+                    <x-input-error for="editPost.extract" />
+                </div>
+                <div class="mb-4">
+                    <x-label>Cuerpo del post</x-label>
+                    <x-textarea class="w-full min-h-20" wire:model="editPost.body"></x-textarea>
+                    <x-input-error for="editPost.body" />
+                </div>
+            </x-slot>
+            <x-slot name="footer">
+                <x-button type="submit">Crear post</x-button>
+            </x-slot>
+        </x-dialog-modal>
+    </form>
 
 </div>
