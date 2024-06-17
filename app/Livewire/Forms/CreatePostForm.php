@@ -20,7 +20,6 @@ class CreatePostForm extends Form
     public $status;
     public $tags = [];
     public $extract;
-    public $user_id;
     public $body;
     public $image;
 
@@ -50,10 +49,9 @@ class CreatePostForm extends Form
     public function save()
     {
         $this->validate();
-        $this->user_id = auth()->user()->id;
         $this->slug = Str::slug($this->name);
         $post = Post::create(
-            $this->only(['name', 'slug', 'category_id', 'status', 'extract', 'body', 'user_id'])
+            $this->only(['name', 'slug', 'category_id', 'status', 'extract', 'body'])
         );
         if ($this->tags) {
             $post->tags()->attach($this->tags);

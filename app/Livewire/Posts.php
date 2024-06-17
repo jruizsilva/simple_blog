@@ -55,11 +55,7 @@ class Posts extends Component
 
     public function destroy()
     {
-        $post = Post::find($this->postId);
-        if ($post->image) {
-            Storage::delete($post->image->url);
-        }
-        $post->delete();
+        Post::destroy($this->postId);
         $this->reset(['open', 'postId']);
     }
 

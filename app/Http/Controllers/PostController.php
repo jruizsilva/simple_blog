@@ -6,6 +6,7 @@ use App\Models\Category;
 use App\Models\Post;
 use App\Models\Tag;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Gate;
 
 class PostController extends Controller
 {
@@ -22,6 +23,7 @@ class PostController extends Controller
 
     public function show(Post $post)
     {
+        Gate::authorize('published', $post);
         $similar_posts = Post::where('category_id', $post->category_id)
             ->where('id', '!=', $post->id)
             ->where('status', 2)
