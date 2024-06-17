@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Admin\AdminPostController;
+use App\Http\Controllers\Admin\AdminUserController;
 use App\Http\Controllers\Admin\CategoryController;
 use App\Http\Controllers\Admin\HomeController;
 use App\Http\Controllers\Admin\TagController;
@@ -12,9 +13,6 @@ Route::middleware([
     config('jetstream.auth_session'),
     'verified',
 ])->group(function () {
-    Route::controller(HomeController::class)->group(function () {
-        Route::get('/admin', 'index')->name('admin.index');
-    });
     Route::controller(CategoryController::class)->group(function () {
         Route::get('/admin/categories', 'index')->name('admin.categories');
     });
@@ -23,6 +21,9 @@ Route::middleware([
     });
     Route::controller(AdminPostController::class)->group(function () {
         Route::get('/admin/posts', 'index')->name('admin.posts');
+    });
+    Route::controller(AdminUserController::class)->group(function () {
+        Route::get('/admin/users', 'index')->name('admin.users');
     });
 });
 

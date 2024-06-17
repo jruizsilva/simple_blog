@@ -1,6 +1,9 @@
 <x-admin-layout>
 
     <x-navigation-admin>
-        Dashboard
+        Users
     </x-navigation-admin>
+
+    @livewire('users')
+
 </x-admin-layout>
