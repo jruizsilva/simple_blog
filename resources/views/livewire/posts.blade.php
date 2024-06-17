@@ -235,7 +235,7 @@
                 </div>
             </x-slot>
             <x-slot name="footer">
-                <x-button type="submit">Crear post</x-button>
+                <x-button type="submit">Actualizar post</x-button>
             </x-slot>
         </x-dialog-modal>
     </form>
