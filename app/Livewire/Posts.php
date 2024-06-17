@@ -7,6 +7,7 @@ use App\Livewire\Forms\EditPostForm;
 use App\Models\Category;
 use App\Models\Post;
 use App\Models\Tag;
+use Illuminate\Support\Facades\Storage;
 use Livewire\Component;
 use Livewire\Features\SupportFileUploads\WithFileUploads;
 use Livewire\WithPagination;
@@ -22,6 +23,8 @@ class Posts extends Component
     public $tags;
     public CreatePostForm $createPost;
     public EditPostForm $editPost;
+    public $open;
+    public $postId;
 
     public function mount()
     {
@@ -42,6 +45,22 @@ class Posts extends Component
     public function update()
     {
         $this->editPost->update();
+    }
+
+    public function confirmDelete($postId)
+    {
+        $this->open = true;
+        $this->postId = $postId;
+    }
+
+    public function destroy()
+    {
+        $post = Post::find($this->postId);
+        if ($post->image) {
+            Storage::delete($post->image->url);
+        }
+        $post->delete();
+        $this->reset(['open', 'postId']);
     }
 
     public function save()

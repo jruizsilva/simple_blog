@@ -7,6 +7,7 @@ use Illuminate\Support\Facades\Storage;
 use Livewire\Attributes\Validate;
 use Livewire\Form;
 use Illuminate\Support\Str;
+use Illuminate\Validation\Rule;
 
 class EditPostForm extends Form
 {
@@ -26,10 +27,25 @@ class EditPostForm extends Form
     protected function rules()
     {
         $rules = [
-            'name' => 'required|min:3|unique:posts',
-            'category_id' => 'required|exists:categories,id',
-            'status' => 'required|in:1,2',
-            'image' => 'nullable|image|mimes:jpeg,png,jpg,svg|max:2048'
+            'name' => [
+                'required',
+                'min:3',
+                Rule::unique('posts', 'name')->ignore($this->postId),
+            ],
+            'category_id' => [
+                'required',
+                Rule::exists('categories', 'id'),
+            ],
+            'status' => [
+                'required',
+                Rule::in([1, 2]),
+            ],
+            'image' => [
+                'nullable',
+                'image',
+                'max:2048', // 2MB
+                'mimes:jpeg,jpg,png'
+            ]
         ];
 
         if ($this->status == 2) {

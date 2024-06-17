@@ -40,7 +40,7 @@
                                         <td class="px-6 py-4 text-sm font-medium whitespace-nowrap text-end">
                                             <button type="button" wire:click="edit({{ $post }})"
                                                 class="inline-flex items-center text-sm font-semibold text-blue-600 border border-transparent rounded-lg gap-x-2 hover:text-blue-800 disabled:opacity-50 disabled:pointer-events-none">Editar</button>
-                                            <button type="button" wire:click=""
+                                            <button type="button" wire:click="confirmDelete({{ $post->id }})"
                                                 class="inline-flex items-center text-sm font-semibold text-blue-600 border border-transparent rounded-lg gap-x-2 hover:text-blue-800 disabled:opacity-50 disabled:pointer-events-none">Eliminar</button>
                                         </td>
                                     </tr>
@@ -191,25 +191,21 @@
                 </div>
                 <div class="grid grid-cols-1 gap-2 mb-4 sm:grid-cols-3">
                     @php
-                        // $url;
-                        // if ($editPost->image) {
-                        //     if (str_contains($editPost->image->url, 'http')) {
-                        //         $url = $editPost->image->url;
-                        //     } else {
-                        //         $url = Storage::url($editPost->image->url);
-                        //     }
-                        // } else {
-                        //     $url = Storage::url('full-moon.jpg');
-                        // }
+                        $url;
+                        if ($editPost->image) {
+                            $url = $editPost->image->temporaryUrl();
+                        } elseif ($editPost->image_preview) {
+                            if (str_contains($editPost->image_preview, 'http')) {
+                                $url = $editPost->image_preview->url;
+                            } else {
+                                $url = Storage::url($editPost->image_preview->url);
+                            }
+                        } else {
+                            $url = Storage::url('full-moon.jpg');
+                        }
                     @endphp
                     <div>
-                        @if ($editPost->image)
-                            <img class="h-32" src="{{ $editPost->image->temporaryUrl() }}" />
-                        @elseif ($editPost->image_preview)
-                            <img class="h-32" src="{{ Storage::url($editPost->image_preview->url) }}" />
-                        @else
-                            <img class="h-32" src="{{ Storage::url('full-moon.jpg') }}" />
-                        @endif
+                        <img class="h-32" src="{{ $url }}" />
                     </div>
                     <div class="sm:col-span-2">
                         <x-label>Imagen que se mostrará en el post</x-label>
@@ -239,5 +235,17 @@
             </x-slot>
         </x-dialog-modal>
     </form>
+
+    <x-dialog-modal wire:model='open'>
+        <x-slot name="title">
+            ¿Desea eliminar el post?
+        </x-slot>
+        <x-slot name="content">
+            ¿Desea eliminar el post?
+        </x-slot>
+        <x-slot name="footer">
+            <x-danger-button wire:click="destroy">Si eliminar</x-danger-button>
+        </x-slot>
+    </x-dialog-modal>
 
 </div>
